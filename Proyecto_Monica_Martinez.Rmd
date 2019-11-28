@@ -1,0 +1,181 @@
+---
+title: "PROYECTO FINAL"
+author: "Mónica Martínez Granero"
+date: "28-11-2019"
+output:
+  rmdformats::readthedown:
+    highlight: kate
+    toc_depth: 3
+  
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+library(rmdformats)
+
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=FALSE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+# 1. Expresiones regulares 
+
+> Una <span style="color:salmon">**expresión regular**</span>, también conocida como regex, es una secuencia de caracteres que forma un patrón de búsqueda, principalmente utilizada para la búsqueda de patrones de cadenas de caracteres u operaciones de sustituciones.
+
+
+* **<span style="color:purple">**Página web 1**</span>** 
+
+En el enlace [**Expresiones regulares 1**](https://riptutorial.com/es/r/topic/5748/expresiones-regulares--expresiones-regulares-) se presentan las expresiones regulares de una manera sencilla y breve, sin ejemplos ilustrativos. Se comentan los símbolos que se pueden utilizar para construir dichas expresiones.
+
+
+
+
+*  **<span style="color:purple">**Página web 2**</span>**
+
+En la web [**Expresiones regulares 2**](http://www.diegocalvo.es/expresiones-regulares-en-r/) se puede observar una gran variedad de ejemplos realizados con R donde claramente se muestran los diferentes comandos constituidos por expresiones regulares y las variadas utilidades que tienen.
+
+
+
+## 1.1. Conclusión
+
+Al realizar la comparación entre las dos páginas web anteriores, llegamos a la conclusión de que el segundo enlace es mejor ya que, al ilustrar todo con ejemplos, queda más claro para el lector y mucho más visual; lo cual sirve de gran ayuda a la hora de realizar una consulta en dicha web.
+
+
+
+# 2. Recursos sobre Markdown 
+
+> <span style="color:salmon">**R Markdown**</span> es un formato que permite una fácil creación de documentos, presentaciones dinámicas e informes de R. Además, se trata de un formato de sintaxis simple para crear documentos en HTML, PDF y Word.
+
+
+* **<span style="color:purple">**Página web 1**</span>** 
+
+En el enlace [**Markdown 1**](https://guides.github.com/features/mastering-markdown/) se puede apreciar una definición de Markdown y los principales cambios del formato del texto, como poner negrita o cursiva. Además, menciona cómo hacer listas, insertar imágenes y enlaces web. Estas explicaciones son llevadas a cabo mediante la ilustración de fragmentos de código muy sencillos y sin ejemplos de salida.
+
+
+
+* **<span style="color:purple">**Página web 2**</span>** 
+
+La página web [**Markdown 2**](https://docplayer.es/82905508-Escribir-un-trabajo-fin-de-estudios-con-r-markdown.html ) se trata de un documento que explica con todo detalle , mostrando el código y su salida, el uso de Markdown. Comienza por lo más básico como puede ser abrir un fichero Markdown en RStudio hasta la contrucción de tablas llamativas, bibliografía, uso de fórmulas matemáticas y resaltar bloques de texto. Todo esto se hace empleando comandos de LaTeX.
+
+## 2.1. Conclusión
+
+Cuando se contrastan ambos enlaces, rápidamente llegamos a la deducción de que la segunda página web es más efectiva y completa que la primera debido a que consta de expresiones de código cuya salida es atractiva, visual y más completa. También cabe mencionar que trata aspectos importantes proporcionando documentos con mejor estructura de texto que con las indicaciones de la primera web no se pueden lograr.
+
+
+
+# 3. Análisis del fichero de datos diamonds con RStudio 
+En este apartado haremos un estudio de los datos **diamonds** y, a partir de él, resaltaremos las propiedades y resultados obtenidos más importantes.
+
+
+## 3.1. Presentación de los datos a estudiar 
+Los datos del fichero `diamonds` se encuentran dentro del paquete `ggplot2` y contiene los precios y otras características de 53940 diamantes.
+
+Se trata de un marco de datos con 53940 observaciones de 10 variables:
+
+* [, 1] <span style="color:green">**price**</span> Precio en dólares estadounidenses (\$ 326 - \$ 18,823)
+* [, 2] <span style="color:green">**carat**</span> Peso del diamante (0.2--5.01) 
+* [, 3] <span style="color:green">**cut**</span> Calidad del corte (regular, buena, muy buena, premium, ideal)
+* [, 4] <span style="color:green">**color**</span> Color del diamante, de D (mejor) a J (peor) 
+* [, 5] <span style="color:green">**clarity**</span> Medida de cuánto de claro es el diamante (I1 (peor), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (mejor))
+* [, 6] <span style="color:green">**x**</span> Longitud en mm (0-10,74) 
+* [, 7] <span style="color:green">**y**</span> Ancho en mm (0--58.9) 
+* [, 8] <span style="color:green">**z**</span> Profundidad en mm (0--31.8) 
+* [, 9] <span style="color:green">**depth**</span> Porcentaje de profundidad total (43-79) obtenido como:
+$$2*\frac{z}{x+y}$$
+* [, 10] <span style="color:green">**table**</span> Ancho de la parte superior del diamante en relación con el punto más ancho (43-95) 
+
+## 3.2. Aspectos relevantes obtenidos a partir del estudio descriptivo de los datos 
+
+Comenzaremos nuestro análisis obteniendo aspectos básicos sobre los datos y empleando distintos tipos de gráficos.
+
+### 3.2.1. Gráfico de cajas y bigotes
+
+Los **diagramas de Caja-Bigotes (boxplots)** son una presentación visual que describe varias características importantes, al mismo tiempo, tales como la dispersión y simetría.
+Para su realización se representan los tres cuartiles y los valores mínimo y máximo de los datos, sobre un rectángulo, alineado horizontal o verticalmente.
+
+En el Gráfico 1 se representa en el eje $X$ los distintos tipos de color que puede presentar cada diamante y en el eje $Y$ presentamos el valor de los quilates.
+
+```{r}
+library(ggplot2)
+# Hacemos un gráfico de cajas para las variables "color" y "depth"
+ggplot(diamonds, aes(x=color, y=carat, fill=color)) + 
+  geom_boxplot() +
+  labs(title="Efecto del color en los quilates", 
+       subtitle="para los distintos datos de diamantes", 
+       tag = "Gráfico 1",
+       x="Tipo de color", 
+       y="Quilates",
+       col=NULL) + theme_get() + scale_fill_hue()
+```
+
+Notemos que el desplazamiento de las cajas hacia arriba indica que cuánto mejor es el color del diamante, más quilates presenta. Además, los puntos que quedan por encima del bigote superior son considerados datos atípicos, es decir, son aquellos que están más allá de los límites inferior y superior.
+
+
+
+### 3.2.2. Gráfico de barras con facetas
+
+En el Gráfico 2 se puede ver que hemos representado los diferentes niveles de claridad del diamante frente al precio, agrupando por los diferentes tipos de corte del diamante.
+
+```{r}
+library(ggplot2)
+ggplot(diamonds, aes(x=clarity, y=price, fill=clarity))+
+  geom_bar(stat='identity')+scale_fill_manual("legend", values = c("I1" = "yellow", "SI2" = "orange", "SI1" = "peru", "VS2"="pink", "VS1"="slateblue", "VVS2"="blue", "VVS1"="turquoise", "IF"="lightgreen"))+ labs(title = "Representación del efecto de la claridad en el precio",
+       subtitle = "dependiendo del tipo de corte del diamante",
+       tag = "Gráfico 2",
+       x = "Claridad",
+       y = "Precio ($)") + facet_wrap(~cut, scales="free",ncol=2) + theme(legend.background = element_rect(fill="lightcoral", size=0.5, linetype="solid", colour ="black"),legend.position = "left")
+
+```
+
+
+Mediante la observación de las distantas gráficas recogidas en el Gráfico 2, se puede concluir que, en general, para todos los tipos de corte, los diagramas de barras tienen una forma muy similar. Ahora bien, se puede apreciar es que cuanto mejor es el corte, mayor es el precio; esto lo notamos en en incremento de los valores de la escala del eje $Y$ a medida que el corte va siendo mejor.
+
+Otro aspecto a destacar es que en cada gráfico se tiene una tendencia clara: Para los niveles *SI2*, *SI1* y *VS2* el precio es más alto en comparación con los demás niveles de claridad del diamante. 
+
+
+
+### 3.2.3. Tabla con los datos de los diamantes de mayor calidad
+En la siguiente tabla hemos recogido los datos de los diamantes cuya calidad es la mejor, esto es debido a que se han seleccionado únicamente los niveles *Very Good*, *Premium* e *Ideal* de la variable `cut`; los niveles *D*, *E*, *F* y *G* de la variable `color`; y los niveles *VVS2*, *VVS1* y *IF* de la variable `clarity`. Además, hemos calculado la media de las variables numéricas `carat`, `depth`, `table` y `price`.
+
+
+```{r}
+library(ggplot2)
+library(plyr)
+library(kableExtra)
+
+recortada <- diamonds[diamonds$cut==c("Very Good","Premium","Ideal") & diamonds$clarity==c("VVS2", "VVS1", "IF") & diamonds$color==c("D", "E", "F", "G"),]
+
+datos <- ddply(recortada, .(cut, color, clarity), summarize, 
+      media.carat = round(mean(carat, na.rm = TRUE),3),
+      media.depth = round(mean(depth, na.rm = TRUE),3),
+      media.table = round(mean(table, na.rm = TRUE),3),
+      media.price = round(mean(price, na.rm = TRUE),3))
+
+kable(datos) %>%
+  kable_styling(full_width = F) %>%
+  collapse_rows(columns = 1:3) %>%
+  row_spec(row = 0, background = "lightblue")
+
+# cut y color y clarity son las variables por las que partimos los datos
+# carat, depth, table y price son las variables a las que calculamos la media
+```
+
+### 3.2.4. Gráfico dinámico con de los diamantes de mayor calidad
+
+En el siguiente gráfico dinámico hemos representado los datos de los diamantes que poseen mayor calidad en cuanto al color, el tipo de corte y la claridad. Más concretamente, se desea conseguir el efecto de la variable `table` en `price` agrupando por el tipo de corte. 
+
+```{r}
+library(plotly)
+plot_ly(data=recortada, x=~table, y=~price, color=~cut)
+```
+
+Analizando el gráfico, se puede ver que los precios más altos se consiguen cuando el corte es ideal. Además, se observa que los precios son más altos cuando el valor de `table` (ancho de la parte superior del diamante en relación con el punto más ancho) está entre 56 y 59.
